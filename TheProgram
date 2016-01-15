@@ -1,0 +1,626 @@
+#include<iostream>
+#include<conio.h>
+
+using namespace std;
+
+
+
+
+class unit{
+public:
+	int key,ct,bin[8];
+	
+	unit(void){
+		ct=0; key=0;}
+    void get_key();
+	void dump(int);
+};
+class Block{
+public:
+	unit block[3][3];
+
+	void checkBlock(int blockID);
+	
+};
+unit puz[9][9];
+Block b1,b2,b3,b4,b5,b6,b7,b8,b9;
+
+
+
+
+
+
+
+
+
+
+
+void Block::checkBlock(int blockID){
+		int nkc=0;
+	for(int i=0; i<3; i++){
+		for(int j=0; j<3; j++){
+	
+		if(block[i][j].key==0)
+			nkc+=1;
+		else continue;
+	}
+	}cout<<"blocknkc="<<nkc;
+
+
+	for(int i=1; i<10; i++){
+		int count=0, culprit=0, lculpritr=0, lculpritc=0;
+		for(int j=0; j<3; j++){
+			 
+			for(int j2=0; j2<3; j2++){
+				int k; //cout<<"\n"<<j<<","<<j2<<"-"<<block[j][j2].key;
+			if(block[j][j2].key==0){
+				for( k=0; k<8; k++){
+					if(block[j][j2].bin[k]==i){
+						++count;
+						break;
+					    }
+					
+				}
+			}	
+				
+		}
+		}
+				
+				
+			
+			if(count==(nkc-1)){
+				    
+					culprit=i;
+
+					for(int c=0; c<3; c++){
+						for(int c2=0; c2<3; c2++){
+						
+						int ct=0,d;
+						if(block[c][c2].key==0){
+						for( d=0; d<8; d++){
+							if(block[c][c2].bin[d]==culprit)
+								break;
+							cout<<d<<"\n";
+						}if(d==8){
+							lculpritr=c;
+						    lculpritc=c2;
+							goto done;
+						}
+
+						}
+					
+					}
+					}
+					done:
+					if(culprit!=0){
+					 block[lculpritr][lculpritc].key=culprit; // I win here!
+					 block[lculpritr][lculpritc].ct=8;
+					 for(int g=0; g<8; g++)
+						 block[lculpritr][lculpritc].bin[g]=0;
+					 block[lculpritr][lculpritc].bin[0]=45-culprit;
+					 cout<<"culprit="<<culprit<<"\t"<<"row="<<lculpritr<<"\t"<<"column="<<lculpritc;
+					}
+					break;
+			}
+		
+	}
+
+
+	switch(blockID){
+	case 1:for(int i=0; i<3; i++){
+		for(int j=0; j<3; j++){
+			puz[i][j].key=block[i][j].key;
+			puz[i][j].ct=block[i][j].ct;
+			for(int k=0; k<8; k++)
+			puz[i][j].bin[k]=block[i][j].bin[k];
+		}
+	}break;
+
+
+	case 2:for(int i=0; i<3; i++){
+		for(int j=0; j<3; j++){
+			puz[i][j+3].key=block[i][j].key;
+			puz[i][j+3].ct=block[i][j].ct;
+			for(int k=0; k<8; k++)
+			puz[i][j+3].bin[k]=block[i][j].bin[k];
+		}
+	}break;
+
+	case 3:for(int i=0; i<3; i++){
+		for(int j=0; j<3; j++){
+			puz[i][j+6].key=block[i][j].key;
+			puz[i][j+6].ct=block[i][j].ct;
+			for(int k=0; k<8; k++)
+			puz[i][j+6].bin[k]=block[i][j].bin[k];
+		}
+	}break;
+
+	case 4:for(int i=0; i<3; i++){
+		for(int j=0; j<3; j++){
+			puz[i+3][j].key=block[i][j].key;
+			puz[i+3][j].ct=block[i][j].ct;
+			for(int k=0; k<8; k++)
+			puz[i+3][j].bin[k]=block[i][j].bin[k];
+		}
+	}break;
+
+	case 5:for(int i=0; i<3; i++){
+		for(int j=0; j<3; j++){
+			puz[i+3][j+3].key=block[i][j].key;
+			puz[i+3][j+3].ct=block[i][j].ct;
+			for(int k=0; k<8; k++)
+			puz[i+3][j+3].bin[k]=block[i][j].bin[k];
+		}
+	}break;
+
+	case 6:for(int i=0; i<3; i++){
+		for(int j=0; j<3; j++){
+		puz[i+3][j+6].key=block[i][j].key;
+			puz[i+3][j+6].ct=block[i][j].ct;
+			for(int k=0; k<8; k++)
+			puz[i+3][j+6].bin[k]=block[i][j].bin[k];
+		}
+	}break;
+
+	case 7:for(int i=0; i<3; i++){
+		for(int j=0; j<3; j++){
+			puz[i+6][j].key=block[i][j].key;
+			puz[i+6][j].ct=block[i][j].ct;
+			for(int k=0; k<8; k++)
+			puz[i+6][j].bin[k]=block[i][j].bin[k];
+		}
+	}break;
+
+	case 8:for(int i=0; i<3; i++){
+		for(int j=0; j<3; j++){
+			puz[i+6][j+3].key=block[i][j].key;
+			puz[i+6][j+3].ct=block[i][j].ct;
+			for(int k=0; k<8; k++)
+			puz[i+6][j+3].bin[k]=block[i][j].bin[k];
+		}
+	}break;
+
+	case 9:for(int i=0; i<3; i++){
+		for(int j=0; j<3; j++){
+			puz[i+6][j+6].key=block[i][j].key;
+			puz[i+6][j+6].ct=block[i][j].ct;
+			for(int k=0; k<8; k++)
+			puz[i+6][j+6].bin[k]=block[i][j].bin[k];
+		}
+	}break;
+	}
+
+}
+void unit::dump(int rt){
+	int i;
+	if(ct==8){
+		get_key();
+		
+	}
+	else{
+		ct=ct+1;
+        for(i=0; i<8; i++){
+			if(bin[i]==rt){
+				
+				bin[i]=rt;
+				ct=ct-1;
+			     break;}
+
+			
+		}
+		if(i==8)
+		{bin[ct-1]=rt;}
+		    
+		
+	}
+	
+	
+}
+void unit::get_key(){
+	int sum=0;
+	for(int i=0; i<8; i++)
+		sum=sum+bin[i];
+	key=45-sum;
+	
+
+}
+void blockAssign()
+{
+	for(int i=0; i<3; i++){
+		for(int j=0; j<3; j++){
+			b1.block[i][j].key=puz[i][j].key;
+			b1.block[i][j].ct=puz[i][j].ct;
+			for(int k=0; k<8; k++)
+			b1.block[i][j].bin[k]=puz[i][j].bin[k];
+		}
+	}
+
+
+	for(int i=0; i<3; i++){
+		for(int j=0; j<3; j++){
+			b2.block[i][j].key=puz[i][j+3].key;
+			b2.block[i][j].ct=puz[i][j+3].ct;
+			for(int k=0; k<8; k++)
+			b2.block[i][j].bin[k]=puz[i][j+3].bin[k];
+		}
+	}
+
+	for(int i=0; i<3; i++){
+		for(int j=0; j<3; j++){
+			b3.block[i][j].key=puz[i][j+6].key;
+			b3.block[i][j].ct=puz[i][j+6].ct;
+			for(int k=0; k<8; k++)
+			b3.block[i][j].bin[k]=puz[i][j+6].bin[k];
+		}
+	}
+
+	for(int i=0; i<3; i++){
+		for(int j=0; j<3; j++){
+			b4.block[i][j].key=puz[i+3][j].key;
+			b4.block[i][j].ct=puz[i+3][j].ct;
+			for(int k=0; k<8; k++)
+			b4.block[i][j].bin[k]=puz[i+3][j].bin[k];
+		}
+	}
+
+	for(int i=0; i<3; i++){
+		for(int j=0; j<3; j++){
+			b5.block[i][j].key=puz[i+3][j+3].key;
+			b5.block[i][j].ct=puz[i+3][j+3].ct;
+			for(int k=0; k<8; k++)
+			b5.block[i][j].bin[k]=puz[i+3][j+3].bin[k];
+		}
+	}
+
+	for(int i=0; i<3; i++){
+		for(int j=0; j<3; j++){
+		b6.block[i][j].key=puz[i+3][j+6].key;
+			b6.block[i][j].ct=puz[i+3][j+6].ct;
+			for(int k=0; k<8; k++)
+			b6.block[i][j].bin[k]=puz[i+3][j+6].bin[k];
+		}
+	}
+
+	for(int i=0; i<3; i++){
+		for(int j=0; j<3; j++){
+			b7.block[i][j].key=puz[i+6][j].key;
+			b7.block[i][j].ct=puz[i+6][j].ct;
+			for(int k=0; k<8; k++)
+			b7.block[i][j].bin[k]=puz[i+6][j].bin[k];
+		}
+	}
+
+	for(int i=0; i<3; i++){
+		for(int j=0; j<3; j++){
+			b8.block[i][j].key=puz[i+6][j+3].key;
+			b8.block[i][j].ct=puz[i+6][j+3].ct;
+			for(int k=0; k<8; k++)
+			b8.block[i][j].bin[k]=puz[i+6][j+3].bin[k];
+		}
+	}
+
+	for(int i=0; i<3; i++){
+		for(int j=0; j<3; j++){
+			b9.block[i][j].key=puz[i+6][j+6].key;
+			b9.block[i][j].ct=puz[i+6][j+6].ct;
+			for(int k=0; k<8; k++)
+			b9.block[i][j].bin[k]=puz[i+6][j+6].bin[k];
+		}
+	}
+}
+void initialize(){
+	int n;
+	cout<<"How many cells are filled?\n";
+	cin>>n;
+	cout<<"\nPlease give us their locations and fill them row-wise";
+	for(int i=0; i<n; i++){
+		int a,b,Key;
+		cout<<"Row:"; cin>>a;
+		cout<<"\nColumn:"; cin>>b;
+		cout<<"The number:"; cin>>Key;
+		puz[a][b].key=Key;
+		puz[a][b].ct=8;
+		puz[a][b].bin[0]=45-Key;
+	}
+}						
+void Mass_dump(int x, int y, int tr){
+	int i;
+ 	for( i=0; i<9; i++)
+		puz[x][i].dump(tr); //dumps that row	
+	for(i=0; i<9; i++)
+		puz[i][y].dump(tr); //dumps that column
+	
+	if(x<3 && y<3){
+		for(i=0;i<3;i++){
+			for(int j=0;j<3;j++)
+				puz[i][j].dump(tr);
+		}
+	}
+
+
+	else if(x>=3 && x<6 && y<3){
+		for(i=3;i<6;i++){
+			for(int j=0;j<3;j++)
+				puz[i][j].dump(tr);
+		}
+	}
+
+	else if(x>=6 && x<9 && y<3){
+		for(i=6;i<9;i++){
+			for(int j=0;j<3;j++)
+				puz[i][j].dump(tr);
+		}
+	}
+
+
+
+	else if(x<3 && y>=3 && y<6){
+		for(i=0;i<3;i++){
+			for(int j=3;j<6;j++)
+				puz[i][j].dump(tr);
+		}
+	}
+
+	else if(x>=3 && x<6 && y>=3 && y<6){
+		for(i=3;i<6;i++){
+			for(int j=3;j<6;j++)
+				puz[i][j].dump(tr);
+		}
+	}
+
+    else if(x>=6 && x<9 && y>=3 && y<6){
+		for(i=6;i<9;i++){
+			for(int j=3;j<6;j++)
+				puz[i][j].dump(tr);
+		}
+	}
+
+	else if(x<3 && y>=6 && y<9){
+		for(i=0;i<3;i++){
+			for(int j=6;j<9;j++)
+				puz[i][j].dump(tr);
+		}
+	}
+
+	else if(x>=3 && x<6 && y>=6 && y<9){
+		for(i=3;i<6;i++){
+			for(int j=6;j<9;j++)
+				puz[i][j].dump(tr);
+		}
+	}
+
+   else {
+		for(i=6;i<9;i++){
+			for(int j=6;j<9;j++)
+				puz[i][j].dump(tr);
+		}
+	}
+
+}
+void SearchAndDestroy(){
+	for(int k=0; k<9; k++){
+		for(int l=0; l<9; l++){
+			if(puz[k][l].key!=0)
+				Mass_dump(k,l,puz[k][l].key);
+			else
+				continue;
+		}
+	}
+
+
+}
+void display(){
+	cout<<endl;
+	for(int p=0; p<9; p++ ){
+		for(int q=0; q<9; q++)
+			cout<<puz[p][q].key<<"\t";
+		cout<<endl;
+	}
+}
+void refresh(){
+	int h=0;
+	while(h<100){
+		SearchAndDestroy();
+		h++;}
+	}
+bool checkSolve(){
+	int sum=0,ctn=0;
+	for(int i=0; i<9; i++){
+		for(int j=0; j<9; j++){
+			sum=sum+puz[i][j].key;
+		}
+	}
+
+	for(int i=0; i<9; i++){
+		for(int j=0; j<9; j++){
+			if(puz[i][j].key!=0)
+			 ctn+=1;
+			else
+				continue;
+			 
+		}
+	}
+
+	if(sum==450 && ctn==81)
+		return true;
+	else 
+		return false;
+}
+void checkRow(int x){
+	
+	int nkc=0;
+	for(int i=0; i<9; i++)
+	{
+		if(puz[x][i].key==0)
+		  nkc+=1; 		
+		
+        else continue;
+	}cout<<"rownkc="<<nkc<<"\t";
+
+	for(int i=1; i<10; i++){
+		int count=0, culprit=0, lculprit=0;
+		for(int j=0; j<9; j++){
+			int k; 
+			if(puz[x][j].key==0){
+				for( k=0; k<8; k++){
+					if(puz[x][j].bin[k]==i){
+						++count;
+						break;
+					    }
+					
+				}
+				
+			}
+		}
+				
+			
+			if(count==(nkc-1)){
+				    
+					culprit=i;
+
+					for(int c=0; c<9; c++){
+						int ct=0,d;
+						if(puz[x][c].key==0){
+						for( d=0; d<8; d++){
+							if(puz[x][c].bin[d]==i)
+								break;
+						}if(d==8){
+							lculprit=c;
+						    goto done1;}
+						}}
+					done1:
+					if(culprit!=0){
+					 puz[x][lculprit].key=culprit; // I win here!
+					 puz[x][lculprit].ct=8;
+					 for(int g=0; g<8; g++)
+						 puz[x][lculprit].bin[g]=0;
+					 puz[x][lculprit].bin[0]=45-culprit;
+					}
+					break;
+			}
+			}
+		
+	
+}
+void checkCol(int y){
+
+	
+	int nkc=0;
+	for(int i=0; i<9; i++)
+	{
+		if(puz[i][y].key==0)
+		  nkc+=1; 		
+		
+        else continue;
+	}cout<<"colnkc="<<nkc<<"\t";
+
+	for(int i=1; i<10; i++){
+		int count=0, culprit=0, lculprit=0;
+		for(int j=0; j<9; j++){
+			int k; 
+			if(puz[j][y].key==0){
+				for( k=0; k<8; k++){
+					if(puz[j][y].bin[k]==i){
+						++count;
+						break;
+					    }
+					
+				}
+				
+			}
+		}
+				
+			
+			if(count==(nkc-1)){
+				    
+					culprit=i;
+
+					for(int c=0; c<9; c++){
+						int ct=0,d;
+						if(puz[c][y].key==0){
+						for( d=0; d<8; d++){
+							if(puz[c][y].bin[d]==i)
+								break;
+						}if(d==8){
+							lculprit=c;
+						    goto done1;}
+						}}
+					done1:
+					if(culprit!=0){
+					 puz[lculprit][y].key=culprit; // I win here!
+					 puz[lculprit][y].ct=8;
+					 for(int g=0; g<8; g++)
+						 puz[lculprit][y].bin[g]=0;
+					 puz[lculprit][y].bin[0]=45-culprit;
+					}
+					break;
+			}
+			}
+		
+	
+}
+void Human(){
+	
+	/*for(int i=0; i<9; i++)
+	 checkCol(i);*/
+	b1.checkBlock(1); refresh(); blockAssign();
+	b2.checkBlock(2); refresh(); blockAssign();
+	b3.checkBlock(3); refresh(); blockAssign();
+	b4.checkBlock(4); refresh(); blockAssign();
+	b5.checkBlock(5); refresh(); blockAssign();
+	b6.checkBlock(6); refresh(); blockAssign();
+	b7.checkBlock(7); refresh(); blockAssign();
+	b8.checkBlock(8); refresh(); blockAssign();
+	b9.checkBlock(9); refresh(); blockAssign();
+
+	for(int i=0; i<9; i++){
+	 checkRow(i);
+	 refresh();
+	 blockAssign();
+	 
+	}
+
+	for(int i=0; i<9; i++){
+	 checkCol(i);
+	 refresh();
+	 blockAssign();
+	 
+	}
+}
+
+
+int main(){
+	bool a=false;
+	initialize();
+		
+	refresh();
+	blockAssign();
+	for(int i=0; i<100; i++)
+	{	Human();
+	refresh();
+	blockAssign();
+	}
+	
+	
+	display();
+	//cout<<"\n";
+	/*for(int i=0; i<3; i++){
+		for(int j=0; j<3;j++){
+			cout<<b2.block[i][j].key;
+		}cout<<"\n";
+	}*/
+
+	cout<<"\nbins:"<<"\n";
+
+	for(int i=0; i<3; i++){
+		for(int j=0; j<3; j++){
+			for(int k=0; k<8; k++){
+				cout<<b2.block[i][j].bin[k]<<"\t";
+			}cout<<"\n";
+		}
+	}
+		
+	
+		getch();
+	return 0;
+}
